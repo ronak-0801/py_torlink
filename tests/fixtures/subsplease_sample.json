@@ -1,0 +1,32 @@
+{
+  "Example Show - 01": {
+    "time": "New",
+    "release_date": "Fri, 01 Jan 2021 00:00:00 +0000",
+    "show": "Example Show",
+    "episode": "01",
+    "downloads": [
+      {
+        "res": "480",
+        "magnet": "magnet:?xt=urn:btih:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&dn=Example+480&xl=1000"
+      },
+      {
+        "res": "1080",
+        "magnet": "magnet:?xt=urn:btih:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb&dn=Example+1080&xl=3000"
+      },
+      {
+        "res": "720",
+        "magnet": "magnet:?xt=urn:btih:cccccccccccccccccccccccccccccccccccccccc&dn=Example+720&xl=2000"
+      }
+    ]
+  },
+  "Other Show - 02": {
+    "show": "Other Show",
+    "episode": "02",
+    "downloads": [
+      {
+        "res": "720",
+        "magnet": "magnet:?xt=urn:btih:dddddddddddddddddddddddddddddddddddddddd&dn=Other+720&xl=1500"
+      }
+    ]
+  }
+}

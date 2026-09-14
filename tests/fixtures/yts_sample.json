@@ -1,0 +1,42 @@
+{
+  "status": "ok",
+  "status_message": "Query was successful",
+  "data": {
+    "movie_count": 1,
+    "limit": 50,
+    "page_number": 1,
+    "movies": [
+      {
+        "id": 10,
+        "url": "https://yts.mx/movies/example-2020",
+        "title": "Example Movie",
+        "title_long": "Example Movie (2020)",
+        "year": 2020,
+        "torrents": [
+          {
+            "url": "https://yts.mx/torrent/download/ABCDEF0123456789ABCDEF0123456789ABCDEF01",
+            "hash": "ABCDEF0123456789ABCDEF0123456789ABCDEF01",
+            "quality": "720p",
+            "type": "web",
+            "seeds": 120,
+            "peers": 10,
+            "size": "900.5 MB",
+            "size_bytes": 944242688,
+            "date_uploaded": "2020-01-01 00:00:00"
+          },
+          {
+            "url": "https://yts.mx/torrent/download/1234567890abcdef1234567890abcdef12345678",
+            "hash": "1234567890abcdef1234567890abcdef12345678",
+            "quality": "1080p",
+            "type": "bluray",
+            "seeds": 50,
+            "peers": 5,
+            "size": "1.76 GB",
+            "size_bytes": 1889785610,
+            "date_uploaded": "2020-01-02 00:00:00"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>FitGirl search</title>
+    <item>
+      <title>Example Game &#8211; Deluxe Edition</title>
+      <link>https://fitgirl-repacks.site/example-game/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <description><![CDATA[Some blurb]]></description>
+      <content:encoded xmlns:content="http://purl.org/rss/1.0/modules/content/"><![CDATA[
+        <p>Mirrors: <a href="https://1337x.to/foo">1337x</a> |
+        <a href="magnet:?xt=urn:btih:EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE&#038;dn=Example+Game+%5BFitGirl%5D&#038;tr=udp%3A%2F%2Ftracker.example%3A6969%2Fannounce">magnet</a> |
+        <a href="magnet:?xt=urn:btih:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&#038;dn=alt">dup</a></p>
+      ]]></content:encoded>
+    </item>
+    <item>
+      <title>Other Game</title>
+      <description>
+        <![CDATA[<a href="magnet:?xt=urn:btih:ffffffffffffffffffffffffffffffffffffffff&dn=Other">m</a>]]>
+      </description>
+    </item>
+  </channel>
+</rss>

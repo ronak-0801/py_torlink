@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools==75.8.2", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pytorlink"
+version = "0.6.0"
+description = "Terminal torrent search and download MVP inspired by torlink"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "pytorlink contributors" }]
+keywords = ["torrent", "magnet", "tui", "textual", "search"]
+dependencies = [
+    "textual==8.2.8",
+    "httpx==0.28.1",
+    "rich==15.0.0",
+]
+
+[project.optional-dependencies]
+qbittorrent = ["qbittorrent-api==2026.8.1"]
+dev = [
+    "pytest==8.4.2",
+    "pytest-asyncio==0.26.0",
+]
+
+[project.scripts]
+pytorlink = "pytorlink.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/example/pytorlink"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src"]

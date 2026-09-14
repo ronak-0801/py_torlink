@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:nyaa="https://nyaa.si/xmlns/nyaa">
+  <channel>
+    <title>Nyaa.si</title>
+    <item>
+      <title>[Group] Example Anime - 01 [1080p]</title>
+      <link>https://nyaa.si/download/1.torrent</link>
+      <guid>https://nyaa.si/view/1</guid>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 -0000</pubDate>
+      <nyaa:seeders>42</nyaa:seeders>
+      <nyaa:leechers>3</nyaa:leechers>
+      <nyaa:downloads>100</nyaa:downloads>
+      <nyaa:infoHash>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</nyaa:infoHash>
+      <nyaa:categoryId>1_2</nyaa:categoryId>
+      <nyaa:category>Anime - English-translated</nyaa:category>
+      <nyaa:size>350.2 MiB</nyaa:size>
+    </item>
+    <item>
+      <title>[Group] Example Anime - 02 [720p]</title>
+      <link>https://nyaa.si/download/2.torrent</link>
+      <guid>https://nyaa.si/view/2</guid>
+      <pubDate>Fri, 02 Jan 2021 00:00:00 -0000</pubDate>
+      <nyaa:seeders>7</nyaa:seeders>
+      <nyaa:leechers>1</nyaa:leechers>
+      <nyaa:downloads>20</nyaa:downloads>
+      <nyaa:infoHash>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</nyaa:infoHash>
+      <nyaa:categoryId>1_2</nyaa:categoryId>
+      <nyaa:category>Anime - English-translated</nyaa:category>
+      <nyaa:size>200.0 MiB</nyaa:size>
+    </item>
+  </channel>
+</rss>
