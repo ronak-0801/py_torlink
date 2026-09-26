@@ -316,3 +316,80 @@ def row_key_for(info_hash: str, used: set[str], index: int) -> str:
         n += 1
     used.add(key)
     return key
+
+
+def table_row_keys(table: Any) -> list[str]:
+    """Current DataTable row keys as strings, in display order."""
+    try:
+        return [str(getattr(k, "value", k)) for k in table.rows]
+    except Exception:
+        return []
+
+
+def sync_download_rows(
+    table: Any,
+    items: Sequence[Any],
+    *,
+    format_rate,
+    name_width: int = DOWNLOAD_NAME_COL_WIDTH,
+) -> None:
+    """Refresh download rows without yanking the cursor when the set is unchanged.
+
+    A full clear()+rebuild every poll tick resets Textual's cursor to row 0, which
+    feels like the highlight jumping to the top while arrow-navigating. When the
+    queue ids (and order) match the table, only Status / Progress / Speed cells
+    are updated in place.
+    """
+    used: set[str] = set()
+    wanted_keys = [row_key_for(h.id, used, i) for i, h in enumerate(items)]
+    current = table_row_keys(table)
+
+    if current == wanted_keys and len(current) == len(items):
+        for handle, key in zip(items, wanted_keys):
+            try:
+                table.update_cell(key, "status", state_cell(handle.progress.state))
+                table.update_cell(key, "progress", progress_cell(handle.progress))
+                table.update_cell(key, "speed", format_rate(handle.progress.download_rate))
+            except Exception:
+                continue
+        return
+
+    prev_key: str | None = None
+    prev_row = 0
+    try:
+        if table.row_count:
+            prev_row = max(0, int(table.cursor_row))
+            row_key = table.coordinate_to_key(table.cursor_coordinate).row_key
+            prev_key = str(getattr(row_key, "value", row_key))
+    except Exception:
+        prev_key = None
+
+    table.clear()
+    used = set()
+    for i, handle in enumerate(items):
+        key = row_key_for(handle.id, used, i)
+        try:
+            table.add_row(
+                name_cell(handle.name, name_width),
+                state_cell(handle.progress.state),
+                progress_cell(handle.progress),
+                format_rate(handle.progress.download_rate),
+                key=key,
+            )
+        except Exception:
+            continue
+
+    if not items:
+        return
+    restore: int | None = None
+    if prev_key:
+        try:
+            restore = table.get_row_index(prev_key)
+        except Exception:
+            restore = None
+    if restore is None:
+        restore = min(prev_row, table.row_count - 1)
+    try:
+        table.move_cursor(row=restore, scroll=False)
+    except Exception:
+        pass

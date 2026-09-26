@@ -29,10 +29,9 @@ from pytorlink.ui.common import (
     SHARED_CSS,
     TORLINK_THEME,
     name_cell,
-    progress_cell,
     row_key_for,
-    state_cell,
     summarize_download_counts,
+    sync_download_rows,
 )
 
 # Back-compat names used by tests / older imports.
@@ -630,44 +629,23 @@ class PytorlinkApp(App[None]):
     def _refresh_downloads(self) -> None:
         table = self.query_one("#downloads", DataTable)
         empty = self.query_one("#downloads-empty", Static)
-        prev_key: str | None = None
-        try:
-            if table.row_count:
-                row_key = table.coordinate_to_key(table.cursor_coordinate).row_key
-                prev_key = str(getattr(row_key, "value", row_key))
-        except Exception:
-            prev_key = None
-        table.clear()
         items = self.queue.items
         empty.set_class(bool(items), "hidden")
-        used_keys: set[str] = set()
-        for i, h in enumerate(items):
-            key = row_key_for(h.id, used_keys, i)
-            try:
-                table.add_row(
-                    name_cell(h.name, DOWNLOAD_NAME_COL_WIDTH),
-                    state_cell(h.progress.state),
-                    progress_cell(h.progress),
-                    format_rate(h.progress.download_rate),
-                    key=key,
-                )
-            except Exception:
-                continue
-        if prev_key:
-            try:
-                table.move_cursor(row=table.get_row_index(prev_key))
-            except Exception:
-                pass
+        sync_download_rows(table, items, format_rate=format_rate)
         summary = summarize_download_counts(items)
         self.query_one("#downloads-summary", Static).update(summary)
         pane = self.query_one("#downloads-pane", Vertical)
         total = len(items)
         pane.border_title = f"Downloads ({total})"
         pane.border_subtitle = f"{summary}  ·  p pause · r resume · x keep files"
+        # Only rewrite the tab label when the text changes — constant updates
+        # re-layout Tabs and can snap the DataTable cursor back to the top.
         try:
             tabs = self.query_one("#tabs", TabbedContent)
             pane_tab = tabs.get_pane("downloads-tab")
-            pane_tab.label = f"Downloads — {summary}" if total else "Downloads"
+            new_label = f"Downloads — {summary}" if total else "Downloads"
+            if str(pane_tab.label) != new_label:
+                pane_tab.label = new_label
         except Exception:
             pass
         # Header subtitle always shows quick counts (visible on either tab)
