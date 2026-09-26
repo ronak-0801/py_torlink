@@ -1,0 +1,106 @@
+{
+  "batchcomplete": true,
+  "query": {
+    "pages": [
+      {
+        "pageid": 192397,
+        "ns": 6,
+        "title": "File:Apollo 15 feather and hammer drop.ogv",
+        "index": 2,
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 54708486,
+            "width": 654,
+            "height": 480,
+            "duration": 47.45034013605442,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Apollo_15_feather_and_hammer_drop.ogv?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Apollo_15_feather_and_hammer_drop.ogv",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=192397",
+            "extmetadata": {
+              "LicenseShortName": {
+                "value": "Public domain",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "pd",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            },
+            "mime": "application/ogg"
+          }
+        ]
+      },
+      {
+        "pageid": 80786180,
+        "ns": 6,
+        "title": "File:Apollo 13 Houston, We've Got a Problem.ogv",
+        "index": 1,
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 130880468,
+            "width": 400,
+            "height": 300,
+            "duration": 1700.800800800801,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Apollo_13_Houston%2C_We%27ve_Got_a_Problem.ogv?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Apollo_13_Houston,_We%27ve_Got_a_Problem.ogv",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=80786180",
+            "extmetadata": {
+              "LicenseShortName": {
+                "value": "Public domain",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "pd",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            },
+            "mime": "application/ogg"
+          }
+        ]
+      },
+      {
+        "pageid": 136732786,
+        "ns": 6,
+        "title": "File:Apollo 4 separation of interstage ring.webm",
+        "index": 3,
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 13631259,
+            "width": 1450,
+            "height": 1080,
+            "duration": 37.866,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Apollo_4_separation_of_interstage_ring.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Apollo_4_separation_of_interstage_ring.webm",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=136732786",
+            "extmetadata": {
+              "LicenseShortName": {
+                "value": "Public domain",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "pd",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            },
+            "mime": "video/webm"
+          }
+        ]
+      },
+      {
+        "pageid": 999999,
+        "ns": 6,
+        "title": "File:No info here.webm",
+        "index": 99
+      }
+    ]
+  }
+}

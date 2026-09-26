@@ -1,0 +1,25 @@
+{
+  "response": {
+    "numFound": 3,
+    "docs": [
+      {
+        "identifier": "night_of_the_living_dead",
+        "title": "Night of the Living Dead",
+        "mediatype": "movies",
+        "item_size": "734003200"
+      },
+      {
+        "identifier": "some-web-archive",
+        "title": "A web collection",
+        "mediatype": "collection",
+        "item_size": "1"
+      },
+      {
+        "identifier": "pg12345",
+        "title": "Public domain book",
+        "mediatype": "texts",
+        "item_size": "2048000"
+      }
+    ]
+  }
+}

@@ -2,7 +2,7 @@
 
 A small **Python** terminal torrent search & download MVP, inspired by [baairon/torlink](https://github.com/baairon/torlink). Original Python code — not a port of the JS sources.
 
-Search curated indexes concurrently from a Textual TUI, then enqueue magnets via libtorrent, qBittorrent, or a magnet-file fallback.
+Search curated indexes concurrently from a Textual TUI, then enqueue magnets via libtorrent, qBittorrent, or a magnet-file fallback. A **separate HTTP mode** searches open media archives (or accepts a pasted file URL) and streams files over HTTP.
 
 **Version:** 0.6.0
 
@@ -82,23 +82,59 @@ export QBIT_PASS=yourpassword
 
 ## Run
 
+Modes are **separate**. Torrent search does not mix with HTTP downloads.
+
 ```bash
-pytorlink
+pytorlink              # interactive picker (TTY): 1 = torrent, 2 = http
+pytorlink torrent      # torrent indexes + magnet / libtorrent / qBittorrent
+pytorlink http         # open-archive search, or paste a direct http(s) URL
 # or
-python -m pytorlink.cli
+python -m pytorlink.cli torrent
+python -m pytorlink.cli http
 ```
 
-- Default download dir: `~/Downloads/pytorlink` (created if needed)
-- Override: `pytorlink --download-dir /path/to/dir`
+- Torrent download dir: `~/Downloads/pytorlink` (created if needed)
+- HTTP download dir: `~/Downloads/pytorlink/http`
+- Override either: `pytorlink torrent --download-dir /path` or `pytorlink http --download-dir /path`
 - Version: `pytorlink --version`
 
-### Backend selection
+Non-interactive shells must pass `torrent` or `http` explicitly.
+
+### Backend selection (torrent mode only)
 
 1. If `QBIT_HOST` is set (and optionally `QBIT_USER` / `QBIT_PASS`), use **qBittorrent** Web API.
 2. Else if **libtorrent** imports cleanly, use that.
 3. Else **magnet-only**: writes a `.magnet` file under the download dir (and tries clipboard). **No torrent data is downloaded** in this mode — the TUI banner says so.
 
 The selected backend’s notice is shown as a banner at the top of the TUI.
+
+### HTTP mode
+
+`pytorlink http` is a **separate TUI**: it does not query torrent indexes.
+
+Sources are searched concurrently and results are interleaved, so no single
+source dominates the top of the list. A source that errors or hangs is
+soft-failed: the others still return, and the status line reports what broke.
+
+| Source | API | Content |
+| --- | --- | --- |
+| Archive.org | `advancedsearch` + `metadata` | Public domain / openly licensed |
+| Wikimedia Commons | MediaWiki `imageinfo` | Public domain / CC |
+| NASA | images-api.nasa.gov | US government public domain |
+
+- Press `d` on a hit → download it. Archive.org and NASA hits resolve to a
+  concrete file first (best available rendition); Commons hits already carry a
+  direct URL.
+- Paste an `http://` or `https://` file URL and press Enter to enqueue it directly.
+- Pause/resume uses HTTP `Range` when the server supports it.
+- All three hosts are queried with a descriptive `User-Agent`; Wikimedia's robot
+  policy rejects spoofed browser agents.
+
+Adding a source means implementing `HttpSource` (`search`, plus `resolve` only
+if search does not return a file URL) and appending it to `HTTP_SOURCES` in
+`httpdl/registry.py`.
+
+This is not a scraper for third-party “direct download” dump sites.
 
 ### Pause, resume, and remove
 
@@ -137,7 +173,7 @@ The footer bindings update with the active tab (Download / Retry / Sources on Se
 
 ```
 src/pytorlink/
-  cli.py                 # argparse → launches TUI
+  cli.py                 # argparse → torrent | http TUI (picker if omitted)
   sources/
     types.py             # Source protocol, TorrentResult, dedupe/sort
     magnet.py            # build/parse magnet, default trackers
@@ -153,14 +189,25 @@ src/pytorlink/
     ext_to.py            # EXT.to HTML search
     rss.py               # RSS magnet extraction helper
     cache.py             # in-memory TTL cache
+  httpdl/
+    types.py             # HttpFileResult, URL helpers, shared User-Agent
+    base.py              # HttpSource interface (search / resolve)
+    registry.py          # registered HTTP sources + concurrent search
+    archive.py           # Internet Archive search + file resolve
+    commons.py           # Wikimedia Commons search (direct URLs)
+    nasa.py              # NASA library search + asset resolve
   config.py              # ~/.config/pytorlink/sources.json persistence
   download/
     types.py             # DownloadBackend protocol (start/poll/pause/resume/remove)
-    queue.py             # queue + backend auto-select
+    queue.py             # torrent queue + backend auto-select
+    http_backend.py      # threaded HTTP(S) file download
+    http_queue.py        # HTTP queue (separate from torrents)
     libtorrent_backend.py
     qbittorrent_backend.py
     magnet_backend.py
-  ui/app.py              # Textual App
+  ui/app.py              # torrent Textual App
+  ui/http_app.py         # HTTP Textual App
+  ui/common.py           # shared theme / CSS / table helpers
 ```
 
 ### Concurrent / streaming search
@@ -184,7 +231,7 @@ The TUI merges, dedupes, and re-sorts incrementally (`N results · K/M sources d
 pytest
 ```
 
-Tests cover magnet build/parse, dedupe, YTS JSON + multi-host failover (mocked), Nyaa RSS + HTML rejection, apibay/SubsPlease/FitGirl/EXT.to fixtures, default source enablement + config persistence, and MagnetBackend/DownloadQueue pause/resume/remove — no network required.
+Tests cover magnet build/parse, dedupe, YTS JSON + multi-host failover (mocked), Nyaa RSS + HTML rejection, apibay/SubsPlease/FitGirl/EXT.to fixtures, Archive.org / Wikimedia / NASA fixtures, HTTP source registry fan-out and soft-fail, HTTP download against a local server, CLI mode selection, default source enablement + config persistence, and MagnetBackend/DownloadQueue pause/resume/remove — no external network required.
 
 ## License
 
